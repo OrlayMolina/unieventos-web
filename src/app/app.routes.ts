@@ -4,6 +4,7 @@ import { LoginComponent } from './componentes/login/login.component';
 import { RegistroComponent } from './componentes/registro/registro.component';
 import { ActivarCuentaComponent } from './componentes/activar-cuenta/activar-cuenta.component';
 import { GestionEventosComponent } from './componentes/gestion-eventos/gestion-eventos.component';
+import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-evento.component';
 import { CrearEventoComponent } from './componentes/crear-evento/crear-evento.component';
 
 export const routes: Routes = [
@@ -13,5 +14,6 @@ export const routes: Routes = [
   { path: 'activar-cuenta', component: ActivarCuentaComponent },
   { path: 'crear-evento', component: CrearEventoComponent },
   { path: "gestion-eventos", component: GestionEventosComponent },
+  { path: 'detalle-evento/:id', component: DetalleEventoComponent },
   { path: "**", pathMatch: "full", redirectTo: "" }
 ];

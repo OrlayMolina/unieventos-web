@@ -12,12 +12,16 @@
         <button type="button" routerLink="/crear-evento" class="bg-green-500 text-white font-semibold py-2 px-4 rounded hover:bg-green-600 transition mr-2">
           <i class="fa-solid fa-plus mr-1"></i> Crear
         </button>
+        <button type="button" class="bg-red-500 text-white font-semibold py-2 px-4 rounded hover:bg-red-600 transition mr-2" (click)="confirmarEliminacion()" [disabled]="seleccionados.length == 0" data-bs-toggle="modal" data-bs-target="#borrar">
+          <i class="fa-solid fa-trash me-1"></i> Eliminar {{ textoBtnEliminar }}
+        </button>
       </div>
 
       <div class="overflow-x-auto rounded-xl">
         <table class="min-w-full bg-white border border-gray-200">
           <thead class="bg-gray-100">
             <tr>
+              <th></th>
               <th class="px-4 py-2 text-left">Código</th>
               <th class="px-4 py-2 text-left">Nombre</th>
               <th class="px-4 py-2 text-left">Tipo</th>
@@ -31,6 +35,7 @@
           <tbody class="divide-y divide-gray-200">
             @for (item of eventos; track $index) {
               <tr>
+                <td><input #check class="form-check-input" type="checkbox" (change)="seleccionar(item, check.checked)" /></td>
                 <td class="px-4 py-2">
                   <p>{{item.id}}</p>
                 </td>

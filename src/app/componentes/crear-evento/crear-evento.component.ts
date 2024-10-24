@@ -7,6 +7,9 @@ import {
   ReactiveFormsModule,
   Validators,
   AbstractControlOptions } from '@angular/forms';
+import { EventoDTO } from '../../dto/evento-dto';
+import Swal from 'sweetalert2';
+import { EventosService } from '../../servicios/eventos.service';
 
 @Component({
   selector: 'app-crear-evento',
@@ -20,7 +23,7 @@ export class CrearEventoComponent {
   tiposDeEvento: string[];
   crearEventoForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private eventosService: EventosService) {
     this.crearFormulario();
     this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
   }
@@ -55,6 +58,8 @@ export class CrearEventoComponent {
   }
 
   public crearEvento(){
-    console.log(this.crearEventoForm.value);
-  }
+    this.eventosService.crear(this.crearEventoForm.value as EventoDTO);
+    Swal.fire("Exito!", "Se ha creado un nuevo evento.", "success");
+   }
+
 }
