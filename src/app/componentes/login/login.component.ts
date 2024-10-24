@@ -30,17 +30,11 @@ export class LoginComponent {
   public logearse() {
     this.authService.loginUsuario(this.loginDTO).subscribe({
       next: (data) => {
-        this.tokenService.login(data.respuesta.token);
-
-        const decodedToken = this.tokenService.decodePayload(data.respuesta.token);
-        const usuario = {
-          nombre: decodedToken.nombre,
-        };
-
-        this.authService.setUser(usuario);
-
         setTimeout(() => {
-          this.router.navigate(['/inicio']);
+          this.tokenService.login(data.respuesta.token);
+          this.router.navigate(['/']).then( () => {
+            window.location.reload();
+          });
         }, 1500);
       },
       error: (error) => {

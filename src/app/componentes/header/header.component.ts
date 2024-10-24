@@ -26,21 +26,11 @@ export class HeaderComponent {
     });
 
     this.verificarToken();
-
-    this.authService.user$.subscribe(user => {
-      if (user) {
-        this.isLoggedIn = true;
-        this.nombreUsuario = user.nombre;
-      } else {
-        this.isLoggedIn = false;
-        this.nombreUsuario = '';
-      }
-    });
   }
 
   verificarRuta() {
     const rutaActual = this.router.url;
-    if (['/login', '/registro'].includes(rutaActual)) {
+    if (['/login', '/registro', '/activar-cuenta'].includes(rutaActual)) {
       this.mostrarElementos = false;
     } else {
       this.mostrarElementos = true;

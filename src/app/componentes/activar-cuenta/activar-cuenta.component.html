@@ -1,0 +1,29 @@
+<div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+  <h2 class="text-3xl font-semibold text-emerald-800 mb-4">Confirmar cuenta</h2>
+  <div class="flex flex-col space-y-2">
+    <label for="email" class="text-emerald-800">Email</label>
+    <input
+      id="email"
+      type="email"
+      [(ngModel)]="email"
+      placeholder="Ingrese su email"
+      class="py-1 px-4 border border-emerald-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600 mt-1"
+    />
+
+    <label for="codigoActivacion" class="text-emerald-800">Código de Activación</label>
+    <input
+      id="codigoActivacion"
+      type="text"
+      [(ngModel)]="codigo"
+      placeholder="Ingrese su código"
+      class="py-1 px-4 border border-emerald-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-600 mt-1"
+    />
+  </div>
+  <button
+    (click)="onAceptar()"
+    class="mt-4 py-1 px-8 text-white bg-emerald-800 hover:bg-emerald-600 rounded-xl"
+  >
+    Aceptar
+  </button>
+  <app-alerta [alerta]="alerta"></app-alerta>
+</div>

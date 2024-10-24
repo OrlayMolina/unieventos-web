@@ -11,8 +11,6 @@ import { CambiarPasswordDTO } from '../dto/cambiar-password-dto';
 export class AuthService {
 
   private authURL = "http://localhost:8080/api/auth";
-  private userSubject = new BehaviorSubject<any>(null);
-  user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) { }
 
@@ -32,11 +30,4 @@ export class AuthService {
     return this.http.post<MensajeDTO>(`${this.authURL}/cambiar-password`, datos);
   }
 
-  setUser(user: {nombre: string}) {
-    this.userSubject.next(user);
-  }
-
-  logout() {
-    this.userSubject.next(null);
-  }
 }
