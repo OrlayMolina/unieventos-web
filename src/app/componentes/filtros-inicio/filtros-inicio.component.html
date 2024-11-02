@@ -6,14 +6,22 @@
         <label for="nombres" class="block text-sm font-medium text-gray-700"
           >Ciudad</label
         >
-        <input
-          type="text"
+        <select
           id="nombres"
           required
-          maxlength="15"
           name="nombres"
-          class="mt-1 block w-full rounded-md border border-slate-400 shadow-sm sm:text-sm"
-        />
+          class="mt-1 block w-full rounded-md shadow-sm border border-slate-400 sm:text-sm"
+        >
+          <option value="" selected>
+            Seleccione una Ciudad
+          </option>
+
+            @for (ciudad of ciudades; track $index){
+              <option [value]="ciudad">{{ciudad}}</option>
+            }
+
+        </select>
+
       </div>
 
       <div class="px-6">
