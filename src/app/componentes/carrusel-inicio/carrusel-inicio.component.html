@@ -1,28 +1,31 @@
-<div class="relative w-full overflow-hidden">
-  <!-- Indicadores -->
-  <div class="absolute bottom-0 left-0 right-0 flex justify-center space-x-3 mb-4">
-    <div
-      *ngFor="let _ of slides; let i = index"
-      (click)="setActiveSlide(i)"
-      class="w-3 h-3 bg-gray-300 rounded-full cursor-pointer"
-      [ngClass]="{'bg-blue-500': i === activeSlide}"
-    ></div>
-  </div>
-
-  <!-- Slides -->
-  <div class="flex transition-transform duration-700 ease-in-out" [ngStyle]="{'transform': 'translateX(-' + activeSlide * 100 + '%)'}">
-    <div *ngFor="let slide of slides" class="w-full flex-shrink-0">
-      <img [src]="slide.imageUrl" [alt]="slide.altText" class="w-full object-cover">
+<div class="mx-48">
+  <div class="relative w-full overflow-hidden">
+    <!-- Indicadores -->
+    <div class="absolute bottom-0 left-0 right-0 flex justify-center space-x-3 mb-4">
+      <div
+        *ngFor="let _ of slides; let i = index"
+        (click)="setActiveSlide(i)"
+        class="w-3 h-3 bg-gray-300 rounded-full cursor-pointer"
+        [ngClass]="{'bg-blue-500': i === activeSlide}"
+      ></div>
     </div>
+
+    <!-- Slides -->
+    <div class="flex transition-transform duration-700 ease-in-out" [ngStyle]="{'transform': 'translateX(-' + activeSlide * 100 + '%)'}">
+      <div *ngFor="let slide of slides" class="w-full flex-shrink-0">
+        <img [src]="slide.imageUrl" [alt]="slide.altText" class="w-full object-cover">
+      </div>
+    </div>
+
+    <!-- Controles Anterior y Siguiente -->
+    <button (click)="prevSlide()" class="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 bg-gray-800 bg-opacity-50 text-white hover:bg-opacity-75">
+      <span aria-hidden="true">&larr;</span>
+      <span class="sr-only">Previous</span>
+    </button>
+    <button (click)="nextSlide()" class="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 bg-gray-800 bg-opacity-50 text-white hover:bg-opacity-75">
+      <span aria-hidden="true">&rarr;</span>
+      <span class="sr-only">Next</span>
+    </button>
   </div>
 
-  <!-- Controles Anterior y Siguiente -->
-  <button (click)="prevSlide()" class="absolute top-1/2 left-0 transform -translate-y-1/2 px-4 py-2 bg-gray-800 bg-opacity-50 text-white hover:bg-opacity-75">
-    <span aria-hidden="true">&larr;</span>
-    <span class="sr-only">Previous</span>
-  </button>
-  <button (click)="nextSlide()" class="absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 bg-gray-800 bg-opacity-50 text-white hover:bg-opacity-75">
-    <span aria-hidden="true">&rarr;</span>
-    <span class="sr-only">Next</span>
-  </button>
 </div>
