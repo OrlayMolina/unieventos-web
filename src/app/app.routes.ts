@@ -8,6 +8,7 @@ import { DetalleEventoComponent } from './componentes/detalle-evento/detalle-eve
 import { CrearEventoComponent } from './componentes/crear-evento/crear-evento.component';
 import { EnviarCodigoComponent } from './componentes/enviar-codigo/enviar-codigo.component';
 import { CambiarPasswordComponent } from './componentes/cambiar-password/cambiar-password.component';
+import { CrearOrdenComponent } from './componentes/crear-orden/crear-orden.component';
 
 export const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -19,5 +20,6 @@ export const routes: Routes = [
   { path: 'crear-evento', component: CrearEventoComponent },
   { path: "gestion-eventos", component: GestionEventosComponent },
   { path: 'detalle-evento/:id', component: DetalleEventoComponent },
+  { path: "crear-orde", component: CrearOrdenComponent },
   { path: "**", pathMatch: "full", redirectTo: "" }
 ];
