@@ -30,7 +30,7 @@ export class HeaderComponent {
 
   verificarRuta() {
     const rutaActual = this.router.url;
-    if (['/login', '/registro', '/activar-cuenta'].includes(rutaActual)) {
+    if (['/login', '/registro', '/activar-cuenta', '/cambiar-password', '/enviar-codigo'].includes(rutaActual)) {
       this.mostrarElementos = false;
     } else {
       this.mostrarElementos = true;
