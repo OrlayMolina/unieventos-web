@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { CiudadDTO } from '../../dto/ciudad-dto';
 import { Alerta } from '../../dto/alerta';
 import { AlertaComponent } from '../alerta/alerta.component';
+import { TipoEventoDTO } from '../../dto/tipo-evento-dto';
 
 @Component({
   selector: 'app-filtros-inicio',
@@ -18,11 +19,14 @@ import { AlertaComponent } from '../alerta/alerta.component';
 export class FiltrosInicioComponent {
 
   ciudades: CiudadDTO[];
+  tipoEventos: TipoEventoDTO[];
   alerta!:Alerta;
 
   constructor(private publicoService: PublicoService, private router: Router){
     this.ciudades = [];
+    this.tipoEventos = [];
     this.listarCiudades();
+    this.listarTiposEventos();
   }
 
   public listarCiudades(){
@@ -31,6 +35,30 @@ export class FiltrosInicioComponent {
         const ciudades = data.respuesta.map((item: CiudadDTO) => item.nombre);
 
         this.ciudades = ciudades;
+        this.alerta = {
+          mensaje: data.respuesta,
+          tipo: "success"
+        }
+
+      },
+      error: (error) => {
+
+        this.alerta = {
+          mensaje: error.error.respuesta,
+          tipo: "danger"
+        }
+
+      }
+    });
+  }
+
+
+  public listarTiposEventos(){
+    this.publicoService.listarTipos().subscribe({
+      next: (data) => {
+        const tipos = data.respuesta.map((item: TipoEventoDTO) => item.nombre);
+
+        this.tipoEventos = tipos;
         this.alerta = {
           mensaje: data.respuesta,
           tipo: "success"
