@@ -4,3 +4,5 @@ export class MensajeDTO {
     public respuesta: any
   ){}
 }
+
+

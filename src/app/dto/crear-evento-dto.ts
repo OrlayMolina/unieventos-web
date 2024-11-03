@@ -1,3 +1,6 @@
+import { LocalidadDTO } from "./localidad-dto";
+import { TipoEventoDTO } from "./tipo-evento-dto";
+
 export interface CrearEventoDTO {
 
   ciudad: string,
@@ -6,7 +9,8 @@ export interface CrearEventoDTO {
   nombre: string,
   descripcion: string,
   direccion: string,
-  tipoEvento: string,
-  fechaEvento: string
-  //localidades: LocalidadDTO[]
+  tipoEvento: TipoEventoDTO,
+  fechaEvento: string,
+  localidades: LocalidadDTO
+  
 }
