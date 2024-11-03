@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Alerta } from '../../dto/alerta';
 import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 import { AuthService } from '../../servicios/auth.service';
 import { ReactiveFormsModule,FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { AlertaComponent } from '../alerta/alerta.component';
+import { ActivarCuentaDTO } from '../../dto/activar-cuenta-dto';
 
 @Component({
   selector: 'app-activar-cuenta',
@@ -17,9 +19,15 @@ export class ActivarCuentaComponent {
 
   codigo: string = '';
   email: string = '';
+  activarCuentaDTO: ActivarCuentaDTO
   alerta: Alerta | null = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {
+    this.activarCuentaDTO = {
+      correo: '',
+      codigoActivacion: ''
+    }
+  }
 
   validarEntradas(): boolean {
     return this.codigo.trim() !== '' && this.email.trim() !== '';
@@ -27,9 +35,20 @@ export class ActivarCuentaComponent {
 
   onAceptar(): void {
     if (this.codigo.trim() && this.email.trim()) {
-      this.authService.activarCuenta(this.email, this.codigo).subscribe({
+
+      this.activarCuentaDTO.correo = this.email;
+      this.activarCuentaDTO.codigoActivacion = this.codigo;
+      this.authService.activarCuenta(this.activarCuentaDTO).subscribe({
+
         next: (response) => {
-          this.alerta = new Alerta(response.respuesta, 'success');
+
+          Swal.fire({
+            title: 'Activación de la Cuenta',
+            text: response.respuesta,
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#065f46',
+          });
 
           setTimeout(() => {
             this.alerta = null;
@@ -38,7 +57,14 @@ export class ActivarCuentaComponent {
 
         },
         error: (error) => {
-          this.alerta = new Alerta(error.error.respuesta, 'danger');
+
+          Swal.fire({
+            title: 'Activación de la Cuenta',
+            text: error.error.respuesta,
+            icon: 'error',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: '#065f46',
+          });
 
           setTimeout(() => {
             this.alerta = null;

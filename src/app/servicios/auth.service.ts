@@ -4,6 +4,8 @@ import { MensajeDTO } from '../dto/mensaje-dto';
 import { LoginDTO } from '../dto/login-dto';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { CambiarPasswordDTO } from '../dto/cambiar-password-dto';
+import { CrearCuentaDTO } from '../dto/crear-cuenta-dto';
+import { ActivarCuentaDTO } from '../dto/activar-cuenta-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -14,20 +16,15 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  public activarCuenta(email: string, codigo: string): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/confirmar-cuenta`, { email, codigo});
+  public activarCuenta(datos: ActivarCuentaDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/activar-cuenta`, datos);
   }
 
   public loginUsuario(loginDTO: LoginDTO): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.authURL}/iniciar-sesion`, loginDTO);
   }
 
-  public enviarCodigo(correo: string) : Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/enviar-codigo-password`, correo);
+  public crearCuenta(cuenta: CrearCuentaDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.authURL}/crear-cuenta`, cuenta);
   }
-
-  public cambiarPassword(datos: CambiarPasswordDTO) : Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/cambiar-password`, datos);
-  }
-
 }

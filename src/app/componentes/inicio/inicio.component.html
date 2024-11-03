@@ -2,17 +2,17 @@
   <app-carrusel-inicio></app-carrusel-inicio>
 
   <div class="mt-16">
-
     <div class="flex flex-col">
-      <h2 class="flex justify-center text-2xl font-semibold mb-4 text-center">
+      <h2 class="flex justify-center text-3xl font-semibold mb-4 text-center text-emerald-900">
         Encuentra el Evento a tu medida!
       </h2>
 
       <app-filtros-inicio></app-filtros-inicio>
     </div>
 
-    <div className="grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-
+    <!-- Aquí iteramos sobre `listaEventos` y renderizamos `app-card-evento` para cada evento -->
+    <div class="flex flex-wrap justify-center mx-36 gap-4">
+      <app-card-evento *ngFor="let evento of listaEventos" [evento]="evento"></app-card-evento>
     </div>
   </div>
 </div>
