@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './carrusel-inicio.component.html',
   styleUrl: './carrusel-inicio.component.css'
 })
-export class CarruselInicioComponent {
+export class CarruselInicioComponent implements OnInit, OnDestroy{
 
   slides = [
     { imageUrl: 'https://firebasestorage.googleapis.com/v0/b/unieventosimagenes.appspot.com/o/jumbotron-2.JPG?alt=media&token=7b35f0a1-65c7-447f-ba6d-955fd0c6d6bf', altText: 'First slide' },
@@ -19,6 +19,21 @@ export class CarruselInicioComponent {
   ];
 
   activeSlide = 0;
+  intervalId: any;
+
+  ngOnInit() {
+    this.startAutoSlide();
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
+
+  startAutoSlide() {
+    this.intervalId = setInterval(() => {
+      this.nextSlide();
+    }, 4500);
+  }
 
   setActiveSlide(index: number) {
     this.activeSlide = index;

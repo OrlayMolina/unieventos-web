@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../servicios/auth.service';
+import { CuentaService } from '../../servicios/cuenta.service';
+import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Alerta } from '../../dto/alerta';
@@ -22,24 +23,33 @@ export class EnviarCodigoComponent {
   email: string = '';
   alerta!:Alerta;
 
-  constructor (private authService: AuthService, private router: Router){}
+  constructor (private cuentaService: CuentaService, private router: Router){}
 
   onActualizar(correo: string): void {
 
-    this.authService.enviarCodigo(correo).subscribe({
+    this.cuentaService.enviarCodigo(correo).subscribe({
       next: (data) => {
 
-        this.alerta = {
-          mensaje: 'Hemos enviado un código para actualizar su contraseña',
-          tipo: 'success'
-        }
+        Swal.fire({
+          title: 'Actualizar contraseña',
+          text: 'Hemos enviado un código para actualizar su contraseña',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#065f46',
+        });
 
         setTimeout(() => {
           this.router.navigate(['/cambiar-password']);
-        }, 1500);
+        }, 2500);
       },
       error: (error) => {
-        this.alerta = new Alerta(error.error.respuesta, 'danger');
+        Swal.fire({
+          title: 'Actualizar contraseña',
+          text: error.error.respuesta,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#8b0000',
+        });
       }
     });
   }

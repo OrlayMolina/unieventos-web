@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../servicios/auth.service';
+import Swal from 'sweetalert2';
+import { CuentaService } from '../../servicios/cuenta.service';
 import { Alerta } from '../../dto/alerta';
 import { AlertaComponent } from '../alerta/alerta.component';
 import { CambiarPasswordDTO } from '../../dto/cambiar-password-dto';
@@ -26,7 +27,7 @@ export class CambiarPasswordComponent {
   confirmarContrasena: string = '';
   alerta!:Alerta;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private cuentaService: CuentaService, private router: Router) {}
 
   onActualizar(): void {
     if (this.nuevaContrasena !== this.confirmarContrasena) {
@@ -41,22 +42,29 @@ export class CambiarPasswordComponent {
       this.nuevaContrasena
     );
 
-    this.authService.cambiarPassword(cambiarPasswordDTO).subscribe({
+    this.cuentaService.cambiarPassword(cambiarPasswordDTO).subscribe({
       next: (data) => {
-        this.alerta = {
-          mensaje: 'Contraseña actualizada correctamente',
-          tipo: 'danger'
-        }
+
+        Swal.fire({
+          title: 'Actualizar contraseña',
+          text: data.respuesta,
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#065f46',
+        });
 
         setTimeout(() => {
           this.router.navigate(['/login']);
-        }, 1500);
+        }, 3000);
       },
       error: (error) => {
-        this.alerta = {
-          mensaje: error.error.respuesta,
-          tipo: 'danger'
-        }
+        Swal.fire({
+          title: 'Actualizar contraseña',
+          text: error.error.respuesta,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#8b0000',
+        });
       }
     });
   }

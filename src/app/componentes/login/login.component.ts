@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 import { LoginDTO } from '../../dto/login-dto';
 import { AuthService } from '../../servicios/auth.service';
 import { TokenService } from '../../servicios/token.service';
@@ -38,7 +39,14 @@ export class LoginComponent {
         }, 1500);
       },
       error: (error) => {
-        this.alerta = new Alerta(error.error.respuesta, 'danger');
+
+        Swal.fire({
+          title: 'Error',
+          text: error.error.respuesta,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#8b0000'
+        });
       },
     });
   }

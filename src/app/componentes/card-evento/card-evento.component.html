@@ -1,1 +1,17 @@
-<p>card-evento works!</p>
+<div class="border-1 border-solid border-emerald-400 p-3 shadow bg-emerald-200 my-6 rounded-lg w-72 max-w-xs mx-auto">
+  <div class="overflow-hidden h-48 rounded-t-lg">
+    <img class="w-full h-full object-cover" [src]="evento.urlImagenPoster" [alt]="evento.nombre" />
+  </div>
+
+  <!-- Centrado del texto del nombre y la fecha -->
+  <div class="p-1 flex flex-col justify-between text-center">
+    <h3 class="text-xl font-bold mb-2">{{ evento.nombre }}</h3>
+    <p class="text-gray-600">{{ evento.ciudad }} - {{ evento.fecha | date: 'dd/MM/yyyy' }}  </p>
+  </div>
+
+  <div class="flex justify-center mt-2">
+    <button class="py-1 px-4 rounded-lg bg-emerald-700 text-white">
+      Agregar al Carrito
+    </button>
+  </div>
+</div>

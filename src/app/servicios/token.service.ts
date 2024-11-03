@@ -30,7 +30,10 @@ export class TokenService {
 
   public logout() {
     window.sessionStorage.clear();
-    this.router.navigate(["/login"]);
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+      window.location.reload();
+    }, 1500);
   }
 
   public decodePayload(token: string): any {
