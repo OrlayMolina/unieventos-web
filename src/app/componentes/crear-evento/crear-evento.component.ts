@@ -11,7 +11,6 @@ import {
 import { EventoDTO } from '../../dto/evento-dto';
 import Swal from 'sweetalert2';
 import { EventosService } from '../../servicios/eventos.service';
-import { EstadoEventoDTO } from '../../dto/estado-evento-dto';
 import { AdministradorService } from '../../servicios/administrador.service';
 import { Alerta } from '../../dto/alerta';
 
@@ -24,7 +23,6 @@ import { Alerta } from '../../dto/alerta';
 })
 export class CrearEventoComponent {
 
-  estadoEvento: EstadoEventoDTO[];
   tiposDeEvento: string[];
   crearEventoForm!: FormGroup;
   alerta!:Alerta;
@@ -32,10 +30,8 @@ export class CrearEventoComponent {
   constructor(private administradorService: AdministradorService, private formBuilder: FormBuilder,
   private eventosService: EventosService) 
   {
-    this.estadoEvento = [];
     this.crearFormulario();
     this.tiposDeEvento = ['Concierto', 'Fiesta', 'Teatro', 'Deportes'];
-    this.obtenerEstadosEvento();
   }
 
   private crearFormulario() {
@@ -48,7 +44,6 @@ export class CrearEventoComponent {
       localidades: this.formBuilder.array([]),
       imagenPortada: ['', [Validators.required]],
       imagenLocalidades: ['', [Validators.required]],
-      estado: ['', Validators.required]
     });
   }
 
@@ -72,30 +67,5 @@ export class CrearEventoComponent {
     this.eventosService.crear(this.crearEventoForm.value as EventoDTO);
     Swal.fire("Exito!", "Se ha creado un nuevo evento.", "success");
    }
-
-
-   public obtenerEstadosEvento(){
-    this.administradorService.obtenerEstadoEventos().subscribe({
-      next: (data) => {
-        const estados = data.respuesta.map((item: EstadoEventoDTO) => item.nombre);
-
-        this.estadoEvento = estados;
-        this.alerta = {
-          mensaje: data.respuesta,
-          tipo: "success"
-        }
-
-      },
-      error: (error) => {
-
-        this.alerta = {
-          mensaje: error.error.respuesta,
-          tipo: "danger"
-        }
-
-      }
-    });
-  }
-
    
 }

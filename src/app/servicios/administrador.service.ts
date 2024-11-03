@@ -4,7 +4,6 @@ import { MensajeDTO } from '../dto/mensaje-dto';
 import { Observable } from 'rxjs';
 import { CrearEventoDTO } from '../dto/crear-evento-dto';
 import { EditarEventoDTO } from '../dto/editar-evento-dto';
-import { EstadoEventoDTO } from '../dto/estado-evento-dto'; 
 
 @Injectable({
   providedIn: 'root'
@@ -46,10 +45,4 @@ export class AdministradorService {
    return this.http.post<MensajeDTO>(`${this.adminURL}/imagen/subir`, imagen);
  }
  
- public obtenerEstadoEventos(): Observable<MensajeDTO> {
-  return this.http.get<MensajeDTO>(`${this.adminURL}/evento/obtener-estadoEventos`);
-}
-
-
-
 }
