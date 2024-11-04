@@ -40,6 +40,12 @@ export class AdministradorService {
    return this.http.get<MensajeDTO>(`${this.adminURL}/evento/obtener-todos`);
  }
 
+ public listarEventos(pagina: number): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(
+    `${this.adminURL}/evento/obtener-infoEventos/${pagina}`
+  );
+}
+
 
  public subirImagen(imagen: FormData): Observable<MensajeDTO> {
    return this.http.post<MensajeDTO>(`${this.adminURL}/imagen/subir`, imagen);

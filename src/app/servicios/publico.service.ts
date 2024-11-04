@@ -21,6 +21,7 @@ export class PublicoService {
       `${this.publicoURL}/evento/obtener-ciudades`
     );
   }
+
   public listarEventos(pagina: number): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(
       `${this.publicoURL}/evento/obtener-todos/${pagina}`
@@ -30,6 +31,7 @@ export class PublicoService {
   public filtroEvento(filtro: FiltroEventoDTO): Observable<MensajeDTO> {
     return this.http.post<MensajeDTO>(`${this.publicoURL}/evento/filtrar`, filtro);
   }
+
 
   public obtenerEvento(id: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicoURL}/evento/obtener/${id}`);

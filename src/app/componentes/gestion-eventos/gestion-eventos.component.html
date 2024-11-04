@@ -33,7 +33,7 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            @for (item of eventos; track $index) {
+            @for (item of listaEventos; track $index) {
               <tr>
                 <td><input #check class="form-check-input" type="checkbox" (change)="seleccionar(item, check.checked)" /></td>
                 <td class="px-4 py-2">
@@ -43,7 +43,7 @@
                   <p>{{item.nombre}}</p>
                 </td>
                 <td class="px-4 py-2">
-                  <p>{{item.tipo}}</p>
+                  <p>{{item.tipoEvento}}</p>
                 </td>
                 <td class="px-4 py-2">
                   <img src="{{item.imagenPortada}}" alt="{{item.nombre}}" class="w-full max-w-[100px]">
@@ -52,7 +52,7 @@
                   <p>{{item.ciudad}}</p>
                 </td>
                 <td class="px-4 py-2">
-                  <p>{{item.fecha}}</p>
+                  <p>{{item.fechaEvento}}</p>
                 </td>
                 <td class="px-4 py-2">
                   <p>{{item.estado}}</p>
