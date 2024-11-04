@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { EventoDTO } from '../../dto/evento-dto';
 import { ActivatedRoute } from '@angular/router';
-import { EventosService } from '../../servicios/eventos.service';
+import { PublicoService } from '../../servicios/publico.service';
+import { InformacionEventoDTO } from '../../dto/informacion-evento-dto';
+import { MensajeDTO } from '../../dto/mensaje-dto';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,7 +19,7 @@ export class DetalleEventoComponent {
   evento: EventoDTO | undefined;
 
 
- constructor(private route: ActivatedRoute, private eventosService: EventosService) {
+ constructor(private route: ActivatedRoute, private publicoService: PublicoService) {
    this.route.params.subscribe((params) => {
      this.codigoEvento = params['id'];
      this.obtenerEvento();
@@ -26,10 +28,7 @@ export class DetalleEventoComponent {
 
 
  public obtenerEvento() {
-   const eventoConsultado = this.eventosService.obtener(this.codigoEvento);
-   if (eventoConsultado != undefined) {
-     this.evento = eventoConsultado;
-   }
+   const eventoConsultado = this.publicoService.obtenerEvento(this.codigoEvento);
  }
 
 }

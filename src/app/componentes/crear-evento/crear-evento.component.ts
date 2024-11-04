@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { EventosService } from '../../servicios/eventos.service';
 import { AdministradorService } from '../../servicios/administrador.service';
 import { Alerta } from '../../dto/alerta';
+import { CrearEventoDTO } from '../../dto/crear-evento-dto';
 
 @Component({
   selector: 'app-crear-evento',
@@ -64,7 +65,7 @@ export class CrearEventoComponent {
   }
 
   public crearEvento(){
-    this.eventosService.crear(this.crearEventoForm.value as EventoDTO);
+    this.administradorService.crearEvento(this.crearEventoForm.value as CrearEventoDTO);
     Swal.fire("Exito!", "Se ha creado un nuevo evento.", "success");
    }
    

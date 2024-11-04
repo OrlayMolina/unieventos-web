@@ -3,6 +3,8 @@ import { EventosService } from '../../servicios/eventos.service';
 import Swal from 'sweetalert2';
 import { RouterModule } from '@angular/router';
 import { EventoDTO } from '../../dto/evento-dto';
+import { AdministradorService } from '../../servicios/administrador.service';
+import { MensajeDTO } from '../../dto/mensaje-dto';
 
 @Component({
   selector: 'app-gestion-eventos',
@@ -17,11 +19,19 @@ export class GestionEventosComponent {
   seleccionados: EventoDTO[];
   textoBtnEliminar: string;
 
-  constructor(public eventosService:EventosService) {
-    this.eventos = eventosService.listar();
+  constructor(public administradorService:AdministradorService) {
+    this.eventos = [];
     this.seleccionados = [];
     this.textoBtnEliminar = "";
   }
+
+
+  ngOnInit() {
+    this.administradorService.listarEventosAdmin().subscribe((mensajeDTO: MensajeDTO) => {
+      this.eventos = mensajeDTO.respuesta;
+    });
+  }
+
 
   public seleccionar(evento: EventoDTO, estado: boolean) {
 
@@ -72,7 +82,7 @@ export class GestionEventosComponent {
 
    public eliminarEventos() {
     this.seleccionados.forEach(e1 => {
-      this.eventosService.eliminar(e1.id);
+      this.administradorService.eliminarEvento(e1.id);
       this.eventos = this.eventos.filter(e2 => e2.id !== e1.id);
     });
     this.seleccionados = [];
