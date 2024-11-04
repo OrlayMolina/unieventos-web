@@ -62,15 +62,42 @@
           </span>
         </div>
 
-        <!-- Menú desplegable del carrito -->
-        <div *ngIf="cartMenuOpen" class="absolute top-10 right-0 bg-white shadow-md rounded-lg p-2 z-10 w-48">
+        <div *ngIf="cartMenuOpen" class="absolute top-10 right-0 bg-white shadow-md rounded-lg p-2 z-10 w-56">
           <p *ngIf="carritoItems.length === 0" class="text-gray-500 text-center">El carrito está vacío</p>
           <ul *ngIf="carritoItems.length > 0">
-            <li *ngFor="let item of carritoItems" class="py-1 px-2 text-gray-800 border-b border-gray-200 last:border-0">
-              {{ item.nombre }} - {{ item.cantidad }}
+            <li *ngFor="let item of carritoItems" class="py-2 px-3 text-gray-800 border-b border-gray-200 last:border-0">
+              <div class="flex items-center space-x-3">
+                <!-- Imagen del producto -->
+                <app-carrito-header [item]="item" class="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden"></app-carrito-header>
+
+                <!-- Detalles del producto con el botón de eliminar al lado -->
+                <div class="flex flex-col flex-grow">
+                  <div class="flex justify-between items-center">
+                    <div>
+                      <p class="font-semibold text-sm">Cantidad: <span class="text-gray-600">{{item.cantidad}}</span></p>
+                      <p class="font-semibold text-sm">Localidad: <span class="font-medium">{{item.nombreLocalidad}}</span></p>
+                    </div>
+                    <!-- Botón de eliminar (icono de papelera) -->
+                    <button
+                      (click)="eliminarItemCarrito(this.carrito.id, item.idEvento)"
+                      class="bg-red-600 hover:bg-red-400 text-white p-1 rounded flex items-center justify-center ml-2"
+                      title="Eliminar"
+                    >
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <!-- Botón Ver Carrito centrado -->
+            <li class="flex justify-center pt-2">
+              <button class="bg-emerald-700 hover:bg-emerald-400 text-white text-md px-4 rounded-lg">
+                Ver Carrito
+              </button>
             </li>
           </ul>
         </div>
+
       </div>
     </div>
   </div>

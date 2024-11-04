@@ -9,11 +9,12 @@ import { CrearEventoComponent } from './componentes/crear-evento/crear-evento.co
 import { EnviarCodigoComponent } from './componentes/enviar-codigo/enviar-codigo.component';
 import { CambiarPasswordComponent } from './componentes/cambiar-password/cambiar-password.component';
 import { CrearOrdenComponent } from './componentes/crear-orden/crear-orden.component';
+import { LoginGuard } from './guards/permiso.service';
 
 export const routes: Routes = [
   { path: '', component: InicioComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'registro', component: RegistroComponent },
+  { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
+  { path: 'registro', component: RegistroComponent, canActivate: [LoginGuard] },
   { path: 'activar-cuenta', component: ActivarCuentaComponent },
   { path: 'enviar-codigo', component: EnviarCodigoComponent },
   { path: 'cambiar-password', component: CambiarPasswordComponent },

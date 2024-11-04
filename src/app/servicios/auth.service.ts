@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MensajeDTO } from '../dto/mensaje-dto';
 import { LoginDTO } from '../dto/login-dto';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { CambiarPasswordDTO } from '../dto/cambiar-password-dto';
+import { Observable } from 'rxjs';
 import { CrearCuentaDTO } from '../dto/crear-cuenta-dto';
 import { ActivarCuentaDTO } from '../dto/activar-cuenta-dto';
 
