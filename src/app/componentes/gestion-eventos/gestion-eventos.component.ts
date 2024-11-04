@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
-import { EventosService } from '../../servicios/eventos.service';
 import Swal from 'sweetalert2';
 import { RouterModule } from '@angular/router';
 import { EventoDTO } from '../../dto/evento-dto';
 import { AdministradorService } from '../../servicios/administrador.service';
-import { MensajeDTO } from '../../dto/mensaje-dto';
+import { ItemEventoDTO } from '../../dto/item-evento-dto';
+import { CardEventoComponent } from '../card-evento/card-evento.component';
+import { InformacionEventoDTO } from '../../dto/informacion-evento-dto';
 
 @Component({
   selector: 'app-gestion-eventos',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule,CardEventoComponent],
   templateUrl: './gestion-eventos.component.html',
   styleUrl: './gestion-eventos.component.css'
 })
 export class GestionEventosComponent {
-
+  listaEventos: InformacionEventoDTO[] = [];
   eventos: EventoDTO[];
-  seleccionados: EventoDTO[];
+  seleccionados: InformacionEventoDTO[];
   textoBtnEliminar: string;
 
   constructor(public administradorService:AdministradorService) {
@@ -25,15 +26,24 @@ export class GestionEventosComponent {
     this.textoBtnEliminar = "";
   }
 
+  ngOnInit(): void {
+    this.cargarEventos();
+  }
 
-  ngOnInit() {
-    this.administradorService.listarEventosAdmin().subscribe((mensajeDTO: MensajeDTO) => {
-      this.eventos = mensajeDTO.respuesta;
+  private cargarEventos(): void {
+    this.administradorService.listarEventos(0).subscribe({
+      next: (data) => {
+        this.listaEventos = data.respuesta;
+        console.log(data.respuesta);
+      },
+      error: (error) => {
+        console.error('Error al cargar los eventos:', error);
+      }
     });
   }
 
 
-  public seleccionar(evento: EventoDTO, estado: boolean) {
+  public seleccionar(evento: InformacionEventoDTO, estado: boolean) {
 
 
     if (estado) {
@@ -82,8 +92,8 @@ export class GestionEventosComponent {
 
    public eliminarEventos() {
     this.seleccionados.forEach(e1 => {
-      this.administradorService.eliminarEvento(e1.id);
-      this.eventos = this.eventos.filter(e2 => e2.id !== e1.id);
+      this.administradorService.eliminarEvento(e1.nombre);
+      this.eventos = this.eventos.filter(e2 => e2.id !== e1.nombre);
     });
     this.seleccionados = [];
     this.actualizarMensaje();
