@@ -5,6 +5,7 @@ import { FiltrosInicioComponent } from '../filtros-inicio/filtros-inicio.compone
 import { CardEventoComponent } from '../card-evento/card-evento.component';
 import { PublicoService } from '../../servicios/publico.service';
 import { ItemEventoDTO } from '../../dto/item-evento-dto';
+import { FiltroEventoDTO } from '../../dto/filtro-evento-dto';
 
 @Component({
   selector: 'app-inicio',
@@ -34,6 +35,18 @@ export class InicioComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al cargar los eventos:', error);
+      }
+    });
+  }
+
+  public filtrarEventos(filtro: FiltroEventoDTO): void {
+    console.log("Filtro enviado al backend:", filtro);
+    this.publicService.filtroEvento(filtro).subscribe({
+      next: (data) => {
+        this.listaEventos = data.respuesta;
+      },
+      error: (error) => {
+        console.error("Error al filtrar los eventos: ", error);
       }
     });
   }

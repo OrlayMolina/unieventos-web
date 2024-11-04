@@ -171,7 +171,7 @@ export class HeaderComponent {
   }
 
   editarPerfil() {
-    console.log('Editar perfil');
+    this.router.navigate(['/editar-perfil', this.tokenService.getIDCuenta()]);
   }
 
   logout() {

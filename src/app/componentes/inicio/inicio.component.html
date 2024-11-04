@@ -7,10 +7,9 @@
         Encuentra el Evento a tu medida!
       </h2>
 
-      <app-filtros-inicio></app-filtros-inicio>
+      <app-filtros-inicio (filtrosAplicados)="filtrarEventos($event)"></app-filtros-inicio>
     </div>
 
-    <!-- Aquí iteramos sobre `listaEventos` y renderizamos `app-card-evento` para cada evento -->
     <div class="flex flex-wrap justify-center mx-36 gap-4">
       <app-card-evento *ngFor="let evento of listaEventos" [evento]="evento"></app-card-evento>
     </div>

@@ -1,0 +1,98 @@
+<div class="bg-gray-200 flex justify-center items-start min-h-screen">
+  <div class="bg-white p-6 rounded-xl shadow-lg w-full max-w-lg my-12">
+
+    <form [formGroup]="actualizacionForm" (ngSubmit)="actualizar()" novalidate="" class="space-y-4">
+      <h2 class="text-2xl font-semibold mb-4 text-center">Editar Cuenta</h2>
+
+      <div class="grid grid-cols-2 gap-4">
+
+        <!-- Campo de nombre -->
+        <div class="mb-4">
+          <label for="nombre" class="block text-gray-700 font-medium mb-2">Nombre:</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            required
+            formControlName="nombre"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800"
+            placeholder="Ingrese su Nombre"
+          />
+        </div>
+
+        <!-- Campo de teléfono -->
+        <div class="mb-4">
+          <label for="telefono" class="block text-gray-700 font-medium mb-2">Teléfono:</label>
+          <input
+            type="number"
+            id="telefono"
+            name="telefono"
+            required
+            formControlName="telefono"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800"
+            placeholder="Ingrese su Teléfono"
+          />
+        </div>
+      </div>
+
+      <!-- Campo de Dirección -->
+      <div class="mb-4">
+        <label for="direccion" class="block text-gray-700 font-medium mb-2">Dirección:</label>
+        <input
+          type="text"
+          id="direccion"
+          name="direccion"
+          required
+          formControlName="direccion"
+          class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800"
+          placeholder="Ingrese su Dirección"
+        />
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Campo de password -->
+        <div class="mb-4">
+          <label for="password" class="block text-gray-700 font-medium mb-2">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            formControlName="password"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800"
+            placeholder="Ingrese su Password"
+          />
+        </div>
+
+        <!-- Campo de repetir password -->
+        <div>
+          <label for="confirmPassword" class="block text-gray-700 font-medium mb-2">Repetir contraseña: </label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            required
+            formControlName="confirmaPassword"
+            class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:border-emerald-800 focus:ring-1 focus:ring-emerald-800"
+            placeholder="Ingrese su Password nuevamente"
+          />
+        </div>
+
+      </div>
+      @if (actualizacionForm.hasError('passwordsMismatch')) {
+        <p class="bg-red-600 text-white py-2 text-center rounded-lg">Las contraseñas no coinciden</p>
+      }
+
+      <div class="mt-6">
+        <button
+          type="submit"
+          class="w-full bg-emerald-800 text-white py-2 px-4 rounded-md hover:bg-emerald-600 focus:ring-2 focus:ring-offset-2 focus:ring-emerald-800">
+          Actualizar Cuenta
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
