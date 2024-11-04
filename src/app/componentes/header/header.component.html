@@ -62,20 +62,20 @@
           </span>
         </div>
 
-        <div *ngIf="cartMenuOpen" class="absolute top-10 right-0 bg-white shadow-md rounded-lg p-2 z-10 w-56">
+        <div *ngIf="cartMenuOpen" class="absolute top-10 right-0 bg-white shadow-md rounded-lg p-2 z-10 w-64">
           <p *ngIf="carritoItems.length === 0" class="text-gray-500 text-center">El carrito está vacío</p>
           <ul *ngIf="carritoItems.length > 0">
             <li *ngFor="let item of carritoItems" class="py-2 px-3 text-gray-800 border-b border-gray-200 last:border-0">
               <div class="flex items-center space-x-3">
-                <!-- Imagen del producto -->
-                <app-carrito-header [item]="item" class="w-12 h-12 flex-shrink-0 rounded-full overflow-hidden"></app-carrito-header>
+                <!-- Imagen del producto centrada -->
+                <app-carrito-header [item]="item" class="w-16 h-16 flex-shrink-0 rounded-md overflow-hidden object-cover"></app-carrito-header>
 
                 <!-- Detalles del producto con el botón de eliminar al lado -->
                 <div class="flex flex-col flex-grow">
                   <div class="flex justify-between items-center">
                     <div>
                       <p class="font-semibold text-sm">Cantidad: <span class="text-gray-600">{{item.cantidad}}</span></p>
-                      <p class="font-semibold text-sm">Localidad: <span class="font-medium">{{item.nombreLocalidad}}</span></p>
+                      <p class="text-sm text-gray-500">Localidad: <span class="font-medium">{{item.nombreLocalidad}}</span></p>
                     </div>
                     <!-- Botón de eliminar (icono de papelera) -->
                     <button
@@ -97,6 +97,7 @@
             </li>
           </ul>
         </div>
+
 
       </div>
     </div>

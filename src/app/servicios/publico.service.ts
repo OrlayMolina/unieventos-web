@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MensajeDTO } from '../dto/mensaje-dto';
+import { FiltroEventoDTO } from '../dto/filtro-evento-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -26,7 +27,12 @@ export class PublicoService {
       `${this.publicoURL}/evento/obtener-todos/${pagina}`
     );
   }
-  
+
+  public filtroEvento(filtro: FiltroEventoDTO): Observable<MensajeDTO> {
+    return this.http.post<MensajeDTO>(`${this.publicoURL}/evento/filtrar`, filtro);
+  }
+
+
   public obtenerEvento(id: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.publicoURL}/evento/obtener/${id}`);
   }
