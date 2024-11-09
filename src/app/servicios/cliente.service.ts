@@ -21,4 +21,8 @@ export class ClienteService {
     const params = new HttpParams().set('idEvento', idEvento);
     return this.http.delete<MensajeDTO>(`${this.clienteURL}/carrito/eliminarItem/${idCarrito}`, { params });
   }
+
+  public obtenerEvento(id: string): Observable<MensajeDTO> {
+    return this.http.get<MensajeDTO>(`${this.clienteURL}/evento/obtener/${id}`);
+  }
 }

@@ -1,34 +1,40 @@
-import { Component } from '@angular/core';
-import { EventoDTO } from '../../dto/evento-dto';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PublicoService } from '../../servicios/publico.service';
+import { CommonModule } from '@angular/common';  // Importación necesaria
+import { AdministradorService } from '../../servicios/administrador.service';
+import { ClienteService } from '../../servicios/cliente.service';
 import { InformacionEventoDTO } from '../../dto/informacion-evento-dto';
 import { MensajeDTO } from '../../dto/mensaje-dto';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-detalle-evento',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule], // Asegúrate de incluir CommonModule aquí
   templateUrl: './detalle-evento.component.html',
-  styleUrl: './detalle-evento.component.css'
+  styleUrls: ['./detalle-evento.component.css']
 })
-export class DetalleEventoComponent {
+export class DetalleEventoComponent implements OnInit {
+  evento: InformacionEventoDTO | undefined;
 
-  codigoEvento: string = '';
-  evento: EventoDTO | undefined;
+  constructor(private route: ActivatedRoute, private administradorService: AdministradorService,
+    private clienteService: ClienteService
+  ) {}
 
+  ngOnInit(): void {
+    const eventoId = this.route.snapshot.paramMap.get('id');
+    if (eventoId) {
+      this.obtenerEvento(eventoId);
+    }
+  }
 
- constructor(private route: ActivatedRoute, private publicoService: PublicoService) {
-   this.route.params.subscribe((params) => {
-     this.codigoEvento = params['id'];
-     this.obtenerEvento();
-   });
- }
-
-
- public obtenerEvento() {
-   const eventoConsultado = this.publicoService.obtenerEvento(this.codigoEvento);
- }
-
+  obtenerEvento(id: string): void {
+    this.clienteService.obtenerEvento(id).subscribe({
+      next: (response) => {
+        this.evento = response.respuesta;
+      },
+      error: (err) => {
+        console.error('Error al obtener los detalles del evento', err);
+      }
+    });
+  }
 }
