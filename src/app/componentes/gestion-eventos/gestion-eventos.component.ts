@@ -10,8 +10,8 @@ import { InformacionEventoDTO } from '../../dto/informacion-evento-dto';
 @Component({
   selector: 'app-gestion-eventos',
   standalone: true,
-  imports: [RouterModule,CardEventoComponent],
-  //imports: [RouterModule],
+  //imports: [RouterModule,CardEventoComponent],
+  imports: [RouterModule],
   templateUrl: './gestion-eventos.component.html',
   styleUrl: './gestion-eventos.component.css'
 })
