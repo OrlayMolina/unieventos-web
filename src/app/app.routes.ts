@@ -11,6 +11,7 @@ import { EnviarCodigoComponent } from './componentes/enviar-codigo/enviar-codigo
 import { CambiarPasswordComponent } from './componentes/cambiar-password/cambiar-password.component';
 import { CrearOrdenComponent } from './componentes/crear-orden/crear-orden.component';
 import { LoginGuard } from './guards/permiso.service';
+import { EditarEventoComponent } from './componentes/editar-evento/editar-evento.component';
 
 export const routes: Routes = [
   { path: '', component: InicioComponent },
@@ -24,5 +25,7 @@ export const routes: Routes = [
   { path: "gestion-eventos", component: GestionEventosComponent },
   { path: 'detalle-evento/:id', component: DetalleEventoComponent },
   { path: "crear-orde", component: CrearOrdenComponent },
-  { path: "**", pathMatch: "full", redirectTo: "" }
+  { path: "**", pathMatch: "full", redirectTo: "" },
+  { path: 'editar-evento/:id', component: EditarEventoComponent }
+
 ];

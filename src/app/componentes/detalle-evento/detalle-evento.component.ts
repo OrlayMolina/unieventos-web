@@ -9,7 +9,7 @@ import { MensajeDTO } from '../../dto/mensaje-dto';
 @Component({
   selector: 'app-detalle-evento',
   standalone: true,
-  imports: [CommonModule], // Asegúrate de incluir CommonModule aquí
+  imports: [CommonModule], 
   templateUrl: './detalle-evento.component.html',
   styleUrls: ['./detalle-evento.component.css']
 })

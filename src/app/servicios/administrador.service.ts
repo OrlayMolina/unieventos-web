@@ -15,6 +15,11 @@ export class AdministradorService {
 
  constructor(private http: HttpClient) { }
 
+ public listarCiudades(): Observable<MensajeDTO> {
+  return this.http.get<MensajeDTO>(
+    `${this.adminURL}/evento/obtener-ciudades`
+  );
+}
 
  public crearEvento(crearEventoDTO: CrearEventoDTO): Observable<MensajeDTO> {
    return this.http.post<MensajeDTO>(`${this.adminURL}/evento/crear`, crearEventoDTO);
