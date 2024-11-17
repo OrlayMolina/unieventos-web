@@ -1,0 +1,67 @@
+<form [formGroup]="crearCuponForm" (ngSubmit)="editarCupon()" class="container mt-4">
+
+  <!-- Campo ID (Oculto) -->
+<div class="mb-3" style="display: none;">
+  <label class="form-label">ID:</label>
+  <input type="text" class="form-control" formControlName="id" placeholder="ID del cupón" />
+</div>
+  <!-- Campo Estado -->
+
+  <div class="mb-3">
+      <label class="form-label">Estado:</label>
+      <select formControlName="estado" class="form-select" required>
+        <option value="">Seleccione un estado</option>
+        <option *ngFor="let estado of estados" [value]="estado">{{ estado }}</option>
+      </select>
+    </div>
+  <!-- Campo Código -->
+  <div class="mb-3">
+      <label class="form-label">Código:</label>
+      <input type="text" class="form-control" formControlName="codigo" placeholder="Ingrese el código del cupón" />
+  </div>
+
+  <!-- Campo Nombre -->
+  <div class="mb-3">
+      <label class="form-label">Nombre:</label>
+      <input type="text" class="form-control" formControlName="nombre" placeholder="Ingrese el nombre del cupón" />
+  </div>
+
+  <!-- Campo Tipo -->
+  <div class="mb-3">
+      <label class="form-label">Tipo:</label>
+      <select formControlName="tipo" class="form-select">
+          <option value="">Seleccione un tipo</option>
+          <option value="UNICO">Único</option>
+          <option value="MULTIPLE">Múltiple</option>
+      </select>
+  </div>
+
+  <!-- Campo Descuento -->
+  <div class="mb-3">
+      <label class="form-label">Descuento (%):</label>
+      <input type="number" class="form-control" formControlName="descuento"
+          placeholder="Ingrese el porcentaje de descuento" />
+  </div>
+
+  <!-- Campo Fecha de Vencimiento -->
+  <div class="mb-3">
+      <label class="form-label">Fecha de Vencimiento:</label>
+      <input type="date" class="form-control" formControlName="fechaVencimiento" />
+  </div>
+
+  <!-- Campo Estado -->
+  <div class="mb-3">
+      <label class="form-label">Estado:</label>
+      <select formControlName="estado" class="form-select">
+          <option value="">Seleccione un estado</option>
+          <option value="ACTIVO">Activo</option>
+          <option value="INACTIVO">Inactivo</option>
+      </select>
+  </div>
+
+  <!-- Botón Crear Cupón -->
+  <div class="text-center">
+      <button type="submit" class="bg-emerald-700 hover:bg-emerald-500 mb-12 rounded-lg text-white px-6 py-1">Editar Cupón</button>
+  </div>
+
+</form>

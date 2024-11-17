@@ -16,9 +16,10 @@
     <div class="flex items-center space-x-4 text-xl">
       <!-- Mostrar enlaces solo si no está logueado -->
       <nav *ngIf="!isLoggedIn && mostrarElementos" class="flex space-x-4">
-        <a routerLink="/login" class="hover:underline">Inicia Sesión</a>
-        <a routerLink="/registro" class="hover:underline">Crear Cuenta</a>
-        <a routerLink="/gestion-eventos" class="hover:underline">Gestión de Eventos</a>
+        <a *ngIf="!isAdmin" routerLink="/login" class="hover:underline">Inicia Sesión</a>
+        <a *ngIf="!isAdmin" routerLink="/registro" class="hover:underline">Crear Cuenta</a>
+        <a *ngIf="isAdmin" routerLink="/gestion-eventos" class="hover:underline">Gestión de Eventos</a>
+        <a *ngIf="isAdmin" routerLink="/gestion-eventos" class="hover:underline">Gestión de Cupones</a>
       </nav>
 
       <!-- Información de usuario cuando está logueado -->
@@ -39,6 +40,8 @@
 
         <!-- Menú desplegable de usuario -->
         <div *ngIf="userMenuOpen" class="absolute top-10 right-0 bg-white shadow-md rounded-lg p-2 z-10">
+          <button *ngIf="isAdmin" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200" (click)="gestionEventos()">Eventos</button>
+          <button *ngIf="isAdmin" class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200" (click)="gestionCupones()">Cupones</button>
           <button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200" (click)="editarPerfil()">Editar Perfil</button>
           <button class="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-200" (click)="logout()">Logout</button>
         </div>
@@ -91,7 +94,10 @@
             </li>
             <!-- Botón Ver Carrito centrado -->
             <li class="flex justify-center pt-2">
-              <button class="bg-emerald-700 hover:bg-emerald-400 text-white text-md px-4 rounded-lg">
+              <button
+                class="bg-emerald-700 hover:bg-emerald-400 text-white text-md px-4 rounded-lg"
+                (click)="irGestionCarrito()"
+              >
                 Ver Carrito
               </button>
             </li>

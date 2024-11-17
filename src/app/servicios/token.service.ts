@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Buffer } from 'buffer';
 
 const TOKEN_KEY = 'AuthToken';
+const REFRESH_TOKEN_KEY = 'RefreshToken';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,17 @@ const TOKEN_KEY = 'AuthToken';
 export class TokenService {
   constructor(private router: Router) {}
 
-  public setToken(token: string) {
-    window.sessionStorage.removeItem(TOKEN_KEY);
+  public setToken(token: string, refresh: string) {
+    window.sessionStorage.clear();
     window.sessionStorage.setItem(TOKEN_KEY, token);
+    window.sessionStorage.setItem(REFRESH_TOKEN_KEY, refresh);
   }
 
   public getToken(): string | null {
+    return sessionStorage.getItem(TOKEN_KEY);
+  }
+
+  public getRefreshToken(): string | null {
     return sessionStorage.getItem(TOKEN_KEY);
   }
 
@@ -23,10 +29,10 @@ export class TokenService {
     return !!this.getToken();
   }
 
-  public login(token: string) {
-    this.setToken(token);
+  public login(token: string, refresh: string) {
+    this.setToken(token, refresh);
     const rol = this.getRol();
-    let destino = rol == 'ADMINISTRADOR' ? '/home-admin' : '/home-cliente';
+    let destino = rol == 'ADMINISTRADOR' ? '/gestion-eventos' : '/';
     this.router.navigate([destino]).then(() => {
       window.location.reload();
     });
@@ -35,9 +41,9 @@ export class TokenService {
   public logout() {
     window.sessionStorage.clear();
     setTimeout(() => {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/']);
       window.location.reload();
-    }, 1500);
+    }, 1000);
   }
 
   public decodePayload(token: string): any {

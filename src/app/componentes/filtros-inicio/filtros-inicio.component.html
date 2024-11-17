@@ -34,7 +34,7 @@
             formControlName="tipo"
             id="tipo"
             (change)="aplicarFiltros()"
-            class="mt-2 block w-full rounded-md shadow-md bg-emerald-700 border-1 border-cyan-400 text-white sm:text-md p-1"
+            class="mt-2 block w-full rounded-md shadow-md bg-emerald-700 border-1 border-emerald-400 text-white sm:text-md p-1"
           >
             <option value="">Seleccione un Tipo de Evento</option>
             <option *ngFor="let tipo of tipoEventos" [value]="tipo">{{ tipo }}</option>

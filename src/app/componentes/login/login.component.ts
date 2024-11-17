@@ -32,10 +32,7 @@ export class LoginComponent {
     this.authService.loginUsuario(this.loginDTO).subscribe({
       next: (data) => {
         setTimeout(() => {
-          this.tokenService.login(data.respuesta.token);
-          this.router.navigate(['/']).then( () => {
-            window.location.reload();
-          });
+          this.tokenService.login(data.respuesta.token, data.respuesta.refreshToken);
         }, 1500);
       },
       error: (error) => {
