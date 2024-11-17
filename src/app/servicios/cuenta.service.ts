@@ -26,6 +26,10 @@ export class CuentaService {
     return this.http.put<MensajeDTO>(`${this.cuentaURL}/editar-perfil`, cuentaEditada);
   }
 
+  public eliminarCuenta(idCuenta: string) : Observable<MensajeDTO> {
+    return this.http.delete<MensajeDTO>(`${this.cuentaURL}/eliminar/${idCuenta}`);
+  }
+
   public obtenerPerfil(idCuenta: string): Observable<MensajeDTO> {
     return this.http.get<MensajeDTO>(`${this.cuentaURL}/obtener/${idCuenta}`);
   }

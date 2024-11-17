@@ -17,6 +17,7 @@ export const usuarioInterceptor: HttpInterceptorFn = (req, next) => {
   }
 
   const token = tokenService.getToken();
+  const refreshToken = tokenService.getRefreshToken();
 
   const authReq = req.clone({
     setHeaders: {
@@ -28,11 +29,11 @@ export const usuarioInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
 
-        const tokenDTO: TokenDTO = { token: token! };
+        const tokenDTO: TokenDTO = { token: token!, refreshToken: refreshToken! };
 
         return authService.refresh(tokenDTO).pipe(
-          switchMap(() => {
-
+          switchMap((resp) => {
+            //tokenService.setToken();
             const newToken = tokenService.getToken();
             const newAuthReq = req.clone({
               setHeaders: {
@@ -42,8 +43,7 @@ export const usuarioInterceptor: HttpInterceptorFn = (req, next) => {
             return next(newAuthReq);
           }),
           catchError((refreshError) => {
-
-            tokenService.logout();
+            //tokenService.logout();
             return throwError(() => refreshError);
           })
         );

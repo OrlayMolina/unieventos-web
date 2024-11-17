@@ -26,15 +26,7 @@ export class AuthService {
   }
 
   public refresh(tokenDTO: TokenDTO): Observable<MensajeDTO> {
-    return this.http.post<MensajeDTO>(`${this.authURL}/refresh`, tokenDTO).pipe(
-      tap((response: MensajeDTO) => {
-        const newToken = response.respuesta;
-        console.log(newToken);
-        if (newToken) {
-          this.tokenService.setToken(newToken);
-        }
-      })
-    );
+    return this.http.post<MensajeDTO>(`${this.authURL}/refresh`, tokenDTO);
   }
 
   public crearCuenta(cuenta: CrearCuentaDTO): Observable<MensajeDTO> {

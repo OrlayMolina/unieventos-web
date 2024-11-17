@@ -1,0 +1,60 @@
+<div class="container mt-5">
+  <div class="card">
+    <!-- Encabezado de la tarjeta -->
+    <div class="card-header ps-5 pt-4 pb-4">
+      <h5 class="mb-0"><i class="fa-solid fa-tags me-3"></i>Gestión de Cupones</h5>
+    </div>
+
+    <div class="card-body p-5">
+      <!-- Botones de acción -->
+      <div class="mb-3">
+        <button type="button" routerLink="/crear-cupon" class="btn btn-success me-2">
+          <i class="fa-solid fa-plus me-1"></i> Crear</button>
+
+
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmarDesactivacion()"
+          [disabled]="cuponesSeleccionados.length == 0"
+        >
+          <i class="fa-solid fa-trash me-1"></i> Desactivar {{ textoBtnDesactivar }}
+        </button>
+      </div>
+
+      <!-- Tabla de cupones -->
+      <div class="overflow-x-auto rounded-xl">
+        <table class="min-w-full bg-white border border-gray-200">
+          <thead class="bg-gray-100">
+            <tr>
+              <th></th>
+              <th class="px-4 py-2 text-left">Código</th>
+              <th class="px-4 py-2 text-left">Nombre</th>
+              <th class="px-4 py-2 text-left">Descuento</th>
+              <th class="px-4 py-2 text-left">Fecha de Vencimiento</th>
+              <th class="px-4 py-2 text-left">Tipo</th>
+              <th class="px-4 py-2 text-left">Estado</th>
+              <th class="px-4 py-2"></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+            <tr *ngFor="let cupon of cupones; trackBy: trackById">
+              <td><input #check type="checkbox" (change)="seleccionarCupon(cupon, check.checked)" /></td>
+              <td class="px-4 py-2">{{ cupon.codigo }}</td>
+              <td class="px-4 py-2">{{ cupon.nombre }}</td>
+              <td class="px-4 py-2">{{ cupon.descuento }}%</td>
+              <td class="px-4 py-2">{{ cupon.fechaVencimiento }}</td>
+              <td class="px-4 py-2">{{ cupon.tipo }}</td>
+              <td class="px-4 py-2" [ngClass]="{'text-success': cupon.estado === 'Activo', 'text-danger': cupon.estado === 'Inactivo'}">
+                {{ cupon.estado }}
+              </td>
+              <td class="px-4 py-2">
+                <a [routerLink]="['/editar-cupon', cupon.id]" class="text-blue-600 hover:underline">Editar</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

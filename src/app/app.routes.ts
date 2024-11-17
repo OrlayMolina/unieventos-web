@@ -11,6 +11,11 @@ import { EnviarCodigoComponent } from './componentes/enviar-codigo/enviar-codigo
 import { CambiarPasswordComponent } from './componentes/cambiar-password/cambiar-password.component';
 import { CrearOrdenComponent } from './componentes/crear-orden/crear-orden.component';
 import { LoginGuard } from './guards/permiso.service';
+import { CarritoComponent } from './componentes/carrito/carrito.component';
+import { RolesGuard } from './guards/roles.service';
+import { GestionCuponesComponent } from './componentes/gestion-cupones/gestion-cupones.component';
+import { CrearCuponComponent } from './componentes/crear-cupon/crear-cupon.component';
+import { EditarCuponComponent } from './componentes/editar-cupon/editar-cupon.component';
 import { EditarEventoComponent } from './componentes/editar-evento/editar-evento.component';
 
 export const routes: Routes = [
@@ -21,11 +26,13 @@ export const routes: Routes = [
   { path: 'enviar-codigo', component: EnviarCodigoComponent },
   { path: 'cambiar-password', component: CambiarPasswordComponent },
   { path: 'editar-perfil/:id', component: EditarPerfilComponent },
-  { path: 'crear-evento', component: CrearEventoComponent },
-  { path: "gestion-eventos", component: GestionEventosComponent },
+  { path: 'crear-evento', component: CrearEventoComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+  { path: 'crear-cupon', component: CrearCuponComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+  { path: "gestion-eventos", component: GestionEventosComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+  { path: "gestion-cupones", component: GestionCuponesComponent, canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] } },
+  { path: 'editar-cupon/:id', component: EditarCuponComponent,   canActivate: [RolesGuard], data: { expectedRole: ["ADMINISTRADOR"] }  },
+  { path: "gestion-carrito", component: CarritoComponent },
   { path: 'detalle-evento/:id', component: DetalleEventoComponent },
   { path: "crear-orde", component: CrearOrdenComponent },
-  { path: "**", pathMatch: "full", redirectTo: "" },
-  { path: 'editar-evento/:id', component: EditarEventoComponent }
-
+  { path: "**", pathMatch: "full", redirectTo: "" }
 ];

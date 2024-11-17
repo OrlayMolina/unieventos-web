@@ -48,6 +48,7 @@ export class EditarPerfilComponent {
     }
     this.cargarDatosUsuario();
     this.crearFormulario();
+    console.log("AAA")
 
   }
 
@@ -63,6 +64,9 @@ export class EditarPerfilComponent {
   }
 
   public cargarDatosUsuario() {
+
+    console.log("ID: "+this.tokenService.getIDCuenta());
+
     this.cuentaService.obtenerPerfil(this.tokenService.getIDCuenta()).subscribe({
       next: (data) => {
 
@@ -113,11 +117,20 @@ export class EditarPerfilComponent {
         });
 
         const token = this.tokenService.getToken();
-        console.log(token);
+        const refreshToken = this.tokenService.getRefreshToken();
         if (token) {
-          this.authService.refresh({ token });
+
+          this.authService.refresh({ token:token, refreshToken: refreshToken!! }).subscribe({
+            next: (data) => {
+              this.tokenService.setToken(data.respuesta.token, data.respuesta.refreshToken);
+              window.location.reload();
+            },
+            error: (error) => {
+              console.error(error);
+            }
+          });
+
         }
-        window.location.reload();
       },
       error: (error) => {
         Swal.fire({
@@ -136,5 +149,30 @@ export class EditarPerfilComponent {
     const confirmaPassword = formGroup.get('confirmaPassword')?.value;
 
     return password == confirmaPassword ? null : { passwordsMismatch: true };
+  }
+
+  public eliminarCuenta(){
+    this.cuentaService.eliminarCuenta(this.tokenService.getIDCuenta()).subscribe({
+      next: (data) => {
+        Swal.fire({
+          title: 'Cuenta eliminada',
+          text: data.respuesta,
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#065f46'
+        })
+
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        Swal.fire({
+          title: 'Error',
+          text: error.error.respuesta,
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          confirmButtonColor: '#8b0000'
+        })
+      }
+    });
   }
 }

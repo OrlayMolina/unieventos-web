@@ -6,6 +6,8 @@ import { CardEventoComponent } from '../card-evento/card-evento.component';
 import { PublicoService } from '../../servicios/publico.service';
 import { ItemEventoDTO } from '../../dto/item-evento-dto';
 import { FiltroEventoDTO } from '../../dto/filtro-evento-dto';
+import { TokenService } from '../../servicios/token.service';
+import { ClienteService } from '../../servicios/cliente.service';
 
 @Component({
   selector: 'app-inicio',
@@ -22,7 +24,11 @@ import { FiltroEventoDTO } from '../../dto/filtro-evento-dto';
 export class InicioComponent implements OnInit {
   listaEventos: ItemEventoDTO[] = [];
 
-  constructor(private publicService: PublicoService) {}
+  constructor(
+    private publicService: PublicoService,
+    private tokenService: TokenService,
+    private clienteService: ClienteService
+  ) {}
 
   ngOnInit(): void {
     this.cargarEventos();
@@ -40,6 +46,12 @@ export class InicioComponent implements OnInit {
   }
 
   public filtrarEventos(filtro: FiltroEventoDTO): void {
+
+    if (!filtro.tipo && !filtro.ciudad && !filtro.nombre) {
+      this.cargarEventos();
+      return;
+    }
+
     console.log("Filtro enviado al backend:", filtro);
     this.publicService.filtroEvento(filtro).subscribe({
       next: (data) => {

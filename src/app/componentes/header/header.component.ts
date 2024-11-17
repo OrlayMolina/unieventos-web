@@ -31,6 +31,8 @@ export class HeaderComponent {
   carrito: CarritoDTO;
   carritoItems: DetalleCarritoDTO[] = [];
   listaEventos: ItemEventoDTO[] = [];
+  cargando: boolean = true;
+  isAdmin: boolean = false;
 
   constructor(
     private router: Router,
@@ -38,24 +40,33 @@ export class HeaderComponent {
     private clienteService: ClienteService,
     private publicService: PublicoService
   ) {
-
     this.carrito = {
       id: '',
       idUsuario: '',
       fecha: '',
-      items:[]
-    }
+      items: []
+    };
     this.isLoggedIn = this.tokenService.isLogged();
     if (this.isLoggedIn) {
       this.email = this.tokenService.getEmail();
+      this.isAdmin = this.tokenService.getRol() === 'ADMINISTRADOR';
     }
     this.router.events.subscribe(() => {
       this.verificarRuta();
     });
 
-    this.verificarToken();
-    this.cargarEventos();
-    this.cargarCarrito();
+    this.inicializarDatos();
+  }
+
+  async inicializarDatos() {
+    try {
+      await Promise.all([this.cargarEventos(), this.cargarCarrito(), this.verificarToken()]);
+      this.asociarImagenes();
+    } catch (error) {
+      console.error('Error al cargar los datos:', error);
+    } finally {
+      this.cargando = false;
+    }
   }
 
   verificarRuta() {
@@ -81,15 +92,14 @@ export class HeaderComponent {
     }
   }
 
-  cargarCarrito() {
-    const token = this.tokenService.getToken();
-    if (token) {
-      const payload = this.tokenService.decodePayload(token);
-      const userId = payload.id;
+  cargarCarrito(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const token = this.tokenService.getToken();
+      if (token) {
+        const payload = this.tokenService.decodePayload(token);
+        const userId = payload.id;
 
-      this.clienteService
-        .obtenerCarritoCliente(userId)
-        .subscribe({
+        this.clienteService.obtenerCarritoCliente(userId).subscribe({
           next: (data) => {
             this.carritoItems = data.respuesta.items.map((item: DetalleCarritoDTO) => ({
               cantidad: item.cantidad,
@@ -99,42 +109,44 @@ export class HeaderComponent {
             }));
 
             this.carrito = data.respuesta;
-
-            this.asociarImagenes();
+            resolve();
           },
           error: (error) => {
             console.error(error.error.respuesta);
+            reject(error);
           }
         });
-    }
-  }
-
-  private cargarEventos(): void {
-    this.publicService.listarEventos(0).subscribe({
-      next: (data) => {
-        this.listaEventos = data.respuesta;
-      },
-      error: (error) => {
-        console.error('Error al cargar los eventos:', error);
+      } else {
+        reject('Token no encontrado');
       }
     });
   }
 
-  private asociarImagenes(): void {
-
-    if (this.carritoItems.length > 0 && this.listaEventos.length > 0) {
-      this.carritoItems.forEach((item) => {
-
-        const evento = this.listaEventos.find((evento) => evento.id === item.idEvento);
-
-        if (evento) {
-          item.foto = evento.urlImagenPoster;
+  cargarEventos(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.publicService.listarEventos(0).subscribe({
+        next: (data) => {
+          this.listaEventos = data.respuesta;
+          resolve();
+        },
+        error: (error) => {
+          console.error('Error al cargar los eventos:', error);
+          reject(error);
         }
       });
-    }
+    });
   }
 
-  eliminarItemCarrito(idCarrito: string, idEvento: string){
+  private asociarImagenes(): void {
+    this.carritoItems.forEach((item) => {
+      const evento = this.listaEventos.find((evento) => evento.id === item.idEvento);
+      if (evento) {
+        item.foto = evento.urlImagenPoster;
+      }
+    });
+  }
+
+  eliminarItemCarrito(idCarrito: string, idEvento: string) {
     this.clienteService.eliminarItemCarrito(idCarrito, idEvento).subscribe({
       next: (data) => {
         Swal.fire({
@@ -145,8 +157,7 @@ export class HeaderComponent {
           confirmButtonColor: '#065f46',
         });
 
-        this.cargarCarrito();
-
+        this.inicializarDatos(); // Recargar los datos del carrito después de eliminar un item
       },
       error: (error) => {
         Swal.fire({
@@ -157,7 +168,7 @@ export class HeaderComponent {
           confirmButtonColor: '#8b0000',
         });
       }
-    })
+    });
   }
 
   toggleUserMenu() {
@@ -170,11 +181,28 @@ export class HeaderComponent {
     this.userMenuOpen = false;
   }
 
+  gestionEventos() {
+    this.userMenuOpen = false;
+    this.router.navigate(['/gestion-eventos']);
+  }
+
+  gestionCupones() {
+    this.userMenuOpen = false;
+    this.router.navigate(['/gestion-cupones']);
+  }
+
   editarPerfil() {
+    this.userMenuOpen = false;
     this.router.navigate(['/editar-perfil', this.tokenService.getIDCuenta()]);
   }
 
   logout() {
+    this.router.navigate(['/']);
     this.tokenService.logout();
+  }
+
+  irGestionCarrito(){
+    this.cartMenuOpen = !this.cartMenuOpen;
+    this.router.navigate(['/gestion-carrito']);
   }
 }
