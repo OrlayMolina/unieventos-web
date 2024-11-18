@@ -9,7 +9,7 @@ import { FiltroEventoDTO } from '../dto/filtro-evento-dto';
 })
 export class PublicoService {
 
-  private publicoURL = 'http://localhost:8080/api/publico';
+  private publicoURL = 'https://unieventosoryan-xijl.onrender.com/api/publico';
 
   constructor(private http: HttpClient) {}
 

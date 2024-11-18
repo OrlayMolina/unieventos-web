@@ -9,7 +9,7 @@ import { ItemEventoDTO } from '../dto/item-evento-dto';
 })
 export class ClienteService {
 
-  private clienteURL = "http://localhost:8080/api/cliente";
+  private clienteURL = "https://unieventosoryan-xijl.onrender.com/api/cliente";
 
   constructor(private http: HttpClient) { }
 

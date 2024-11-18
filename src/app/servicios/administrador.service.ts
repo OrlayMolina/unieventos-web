@@ -11,7 +11,7 @@ import { EditarCuponDTO } from '../dto/editar-cupon-dto';
   providedIn: 'root',
 })
 export class AdministradorService {
-  private adminURL = 'http://localhost:8080/api/admin';
+  private adminURL = 'https://unieventosoryan-xijl.onrender.com/api/admin';
 
   constructor(private http: HttpClient) {}
  public listarCiudades(): Observable<MensajeDTO> {

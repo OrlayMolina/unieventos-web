@@ -7,7 +7,7 @@ import { MensajeDTO } from '../dto/mensaje-dto';
   providedIn: 'root'
 })
 export class EventosService {
-  private publicoURL = 'http://localhost:8080/api/publico'; // Cambia la URL si es diferente
+  private publicoURL = 'https://unieventosoryan-xijl.onrender.com/api/publico'; // Cambia la URL si es diferente
 
   constructor(private http: HttpClient) {}
   public obtenerEvento(id: string): Observable<MensajeDTO> {

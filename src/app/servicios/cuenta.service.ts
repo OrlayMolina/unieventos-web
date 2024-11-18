@@ -10,7 +10,7 @@ import { EditarCuentaDTO } from '../dto/editar-cuenta-dto';
 })
 export class CuentaService {
 
-  private cuentaURL = "http://localhost:8080/api/cuenta";
+  private cuentaURL = "https://unieventosoryan-xijl.onrender.com/api/cuenta";
 
   constructor(private http: HttpClient) { }
 
